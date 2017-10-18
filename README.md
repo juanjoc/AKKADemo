@@ -36,9 +36,22 @@ Give examples
 Una vez se tenga descargado y descomprimido (en su caso) el código de la aplicación, con Maven se podrá ejecutar desde la línea
 de comandos de la siguiente forma:
 
-```
+```text
 cd [dir_install]
 mvn clean spring-boot:run
+```
+
+Una vez que termine la descarga de los componentes necesarios se arrancará un servidor embebido que proporciona Springboot. Una 
+vez arrancado este, ya se podrá introducir en la barra de un navegador la dirección que habilita. Es la siguiente:
+
+```html
+http://localhost:8080/stocks/BBVA
+```
+
+El servidor nos responderá con la cotización guardada para BBVA
+
+```json
+{BBVA:7.17}
 ```
 
 
