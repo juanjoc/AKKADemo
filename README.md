@@ -234,7 +234,7 @@ Ver la lista de [contribuidores](https://github.com/juanjoc/AKKADemo/contributor
 
 ## Licencia
 
-Este proyecto está licenciado como GNU General Public License (GPL) 3.0 - ver el fichero [LICENCE.md](https://github.com/juanjoc/AKKADemo/blob/master/LICENSE.md) para más detalles.
+Este proyecto está licenciado como GNU General Public License (GPL) 3.0 - ver el fichero [LICENCE.md](https://github.com/juanjoc/AKKADemo/blob/master/LICENCE.md) para más detalles.
 
 
 ## Agradecimientos
