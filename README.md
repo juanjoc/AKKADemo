@@ -7,7 +7,7 @@ Código que completa el artículo publicado en el blog de Cygnus Source sobre AK
 La finalidad de este pequeño proyecto no es otra que la de mostrar de una forma más práctica lo expuesto en el artículo
 publicado en el blog de Cygnus Source sobre la tecnología AKKA.
 
-Puedes seguir el artículo mediante este [enlace](http://www.cygnussource.com/creacion-microservicio-apache-tomee/). 
+Puedes seguir el artículo mediante este [enlace](http://www.cygnussource.com/el-patron-actor-por-akka/). 
 
 ### Funcionalidad
 La funcionalidad propuesta se ha intentado mantener lo más simple posible. 
