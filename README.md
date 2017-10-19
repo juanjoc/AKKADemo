@@ -28,9 +28,6 @@ Para poder ejecutar el proyecto se deberá tener instalado en el sistema:
 * JDK 1.8
 * Maven 3.x
 
-```
-Give examples
-```
 
 ### Ejecución
 Una vez se tenga descargado y descomprimido (en su caso) el código de la aplicación, con Maven se podrá ejecutar desde la línea
@@ -41,8 +38,8 @@ cd [dir_install]
 mvn clean spring-boot:run
 ```
 
-Una vez que termine la descarga de los componentes necesarios se arrancará un servidor embebido que proporciona Springboot. Una 
-vez arrancado este, ya se podrá introducir en la barra de un navegador la dirección que habilita. Es la siguiente:
+Una vez termine la descarga de los componentes necesarios se arrancará el servidor embebido que proporciona Springboot. Una 
+vez arrancado este, ya se podrá introducir en la barra de direcciones de un navegador la dirección que habilita. Es la siguiente:
 
 ```html
 http://localhost:8080/stocks/BBVA
@@ -51,7 +48,7 @@ http://localhost:8080/stocks/BBVA
 El servidor nos responderá con la cotización guardada para BBVA
 
 ```json
-{BBVA:7.17}
+{'BBVA':7.17}
 ```
 
 
@@ -68,7 +65,7 @@ Si revisamos el directorio con los fuentes, veremos que sólo existen 4 archivos
  
  Nos encontramos con dos sentencias importantes aquí:
  
- ```
+ ```java
  static ActorSystem system = ActorSystem.create("testSystem");
  static ActorRef manager = system.actorOf(Props.create(StockManager.class), "manager");
  ```
@@ -76,7 +73,10 @@ Si revisamos el directorio con los fuentes, veremos que sólo existen 4 archivos
  También se declara el primer actor (manager) que será el responsable de exponer toda la funcionalidad necesaria para 
  la inclusión de nuevos valores y sus consultas.
  
- También está el método init perteneciente a Springboot en el que se ha colocado una carga inicial de valores simulando 
+ El crear sistemas de actores (ActorSystem) no es una operación "barata", por lo que se considera que sólo debe existir 
+ un único sistema por cada aplicación lógica.
+ 
+ Luego encontramos el método init anotado con @bean y perteneciente a Springboot en el que se ha colocado una carga inicial de valores simulando 
  el on-line de un sistema que alimentase contínuamente a nuestro proyecto con los valores y cotizaciones actualizados.
  
  Por cada pareja de XXX,99.99 se realiza una llamada a nuestro mánager que incluirá el nuevo valor en el sistema.
@@ -90,10 +90,10 @@ la funcionalidad de la apliación.
 
 Además de establecer la ruta de la aplicación "/stocks", expone dos servicios:
 
-* **/stocks/{tickerSymbol}** (GET )Nos proporciiona la última cotización registrada en el sistema para el valor (tickerSymbol) indicado.
+* **/stocks/{tickerSymbol}** (GET ) Nos proporciona la última cotización registrada en el sistema para el valor (tickerSymbol) indicado.
 * **/stocks/{tickerSymbol}/{quote}** (POST) Permite la inclusión de un nuevo valor junto con su cotización en el sistema.
 
-Dado que cuando trabajemos con AKKA deberemos usar futuros para extraer del sistema de actores valores derivados de sus
+Dado que cuando trabajamos con AKKA debemos usar futuros para extraer del sistema de actores valores derivados de sus
 computaciones, en este método podemos ver cómo hacerlo.
 
 Se usa la clase Patterns de la librería de AKKA llamando a su método ask:
@@ -255,4 +255,4 @@ Este proyecto está licenciado como GNU General Public License (GPL) 3.0 - ver e
 * Al nicho de conocimiento inagotable que es [Stack Overflow](https://es.stackoverflow.com/). 
 * A nuestra no siempre bien reconocida [Wikipedia](https://es.wikipedia.org/wiki/Wikipedia:Portada).
 * A la documentación en línea de [AKKA](https://doc.akka.io/docs/akka/current/java/guide/index.html), todo un lujo.
-* A [Cygnus Source](http://www.cygnussource.com) por obligarme.
+* A [Cygnus Source](http://www.cygnussource.com), por obligarme.
