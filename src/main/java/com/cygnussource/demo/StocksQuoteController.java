@@ -8,10 +8,14 @@ import akka.pattern.Patterns;
 import akka.util.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/stocks")
@@ -22,6 +26,22 @@ public class StocksQuoteController {
     @Autowired
     StocksQuoteController () {
 
+    }
+
+    @RequestMapping(method = RequestMethod.OPTIONS, value = "/{tickerSymbol}", produces = MediaType.APPLICATION_JSON_VALUE)
+    String getQuoteOptions(HttpServletResponse rsp, @PathVariable String tickerSymbol) {
+        rsp.setHeader("Allow", "GET,OPTIONS");
+        String sb = "{" +
+                "\"GET\":{" +
+                "\"description\":\"Recupera la cotización del valor indicado\"," +
+                "\"parameters\":{" +
+                "\"tickerSymbol\":{\"" +
+                "type\":\"String\"," +
+                "\"description\":\"Identificador del valor\"," +
+                "\"required\":\"true\"" +
+                "}}}}";
+
+        return sb;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{tickerSymbol}")
@@ -47,6 +67,27 @@ public class StocksQuoteController {
         } else {
             throw new TickerSymbolOrQuoteRequiredException();
         }
+    }
+
+    @RequestMapping(method = RequestMethod.OPTIONS, value = "/{tickerSymbol}/{quote}", produces = MediaType.APPLICATION_JSON_VALUE)
+    String setQuoteOptions(HttpServletResponse rsp, HttpServletRequest rqst, @PathVariable String tickerSymbol, @PathVariable String quote) {
+        rsp.setHeader("Allow", "POST,OPTIONS");
+        String sb = "{" +
+                    "\"POST\":{" +
+                        "\"description\":\"Añade un valor junto con su cotización\"," +
+                        "\"parameters\":{" +
+                            "\"tickerSymbol\":{\"" +
+                                "type\":\"String\"," +
+                                "\"description\":\"Identificador del valor\"," +
+                                "\"required\":\"true\"" +
+                                "}," +
+                            "\"quote\":{" +
+                                "\"type\":\"double\"," +
+                                "\"description\":\"Cotización del valor\"," +
+                                "\"required\":\"true\"" +
+                                "}}}}";
+
+        return sb;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{tickerSymbol}/{quote}")
